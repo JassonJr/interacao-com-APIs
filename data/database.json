@@ -7,6 +7,14 @@
     {
       "id": 2,
       "nome": "Calota"
+    },
+    {
+      "id": 34,
+      "nome": "Volante"
+    },
+    {
+      "id": 44,
+      "nome": "Farol"
     }
   ],
   "clientes": [
@@ -29,6 +37,11 @@
       "id": 4,
       "nome": "juliana",
       "senha": "2244000"
+    },
+    {
+      "id": 5,
+      "username": "lucas",
+      "senha": "qualquercoisa"
     }
   ]
 }
