@@ -15,6 +15,10 @@
     {
       "id": 35,
       "nome": "Farol baixo"
+    },
+    {
+      "id": 36,
+      "nome": "Escapamento"
     }
   ],
   "clientes": [
