@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Create com POST 🛠</title>
+</head>
+<body>
+    <h1>Read com GET 🛴</h1>
+    <nav>
+        <ul>
+            <li><a href="./index.html">🏡 Home</a></li>
+            <li><a href="./get.html">👨🏻‍🦯 Read com GET</a></li>
+            <li><a href=""></a></li>
+            <li><a href=""></a></li>
+        </ul>
+    </nav>
+
+    <form action="" method="post">
+        <div class="controle-form">
+            <label for="idProduto">ID:</label>
+            <input type="text" id="idProduto" name="idProduto">
+            <label for="nomeProduto">Nome</label>
+            <input type="text" id="nomeProduto" name="nomeProduto">
+        </div>
+
+        <button type="button" id="cadastrarProd">Cadastrar Produto</button>
+    </form>
+    <form action="" method="post"></form>
+
+    <!-- <button type="button" id="carregarProd">Carregar Produtos</button> -->
+    <div id="produtos"></div>
+
+    <script>
+        document.querySelector('#cadastrarProd').addEventListener('click', () => {
+
+            const dadosProd = {
+                "id": null,
+                "nome": document.querySelector('#nomeProduto').value
+            }
+
+            fetch('https://miniature-space-meme-gp6wjr447wg2wp9j-3000.app.github.dev/produtos',{
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(dadosProd)
+            })
+            .then(res => {
+                if(res.ok) window.alert('Produto Cadastrado com Sucesso.')
+                else window.alert('Houve algum erro ao cadastrar o produto.')
+            })
+            // .then(res => res.json())
+            // .then(res => {
+            //     const produtos = document.querySelector('#produtos')
+            //     const tituloProd = document.createElement('h2')
+
+            //     produtos.innerHTML = ''
+            //     tituloProd.innerHTML = 'Produtos'
+            //     produtos.append(tituloProd)
+            //     res.forEach(produto => {
+            //         produtos.innerHTML += `<ul><li>ID:${produto.id}</li><li>Nome: ${produto.nome}</li></ul>`
+            //     })
+            // })
+        })
+    </script>
+</body>
+</html>
