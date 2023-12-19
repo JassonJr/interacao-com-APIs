@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Interação com APIs</title>
+</head>
+<body>
+    <h1>UPDATE com PUT 🔄</h1>
+    <nav>
+        <ul>
+            <li><a href="./index.html">🏡 Home</a></li>
+            <li><a href="./get.html">👨🏻‍🦯 Read com GET</a></li>
+            <li><a href="./create.html">🛠 Create com POST</a></li>
+            <li><a href="./delete.html">❌ Delete com DELETE</a></li>
+        </ul>
+    </nav>
+
+    <form action="" method="post">
+
+        <div class="controle-form">
+            <label for="idProduto">ID:</label>
+            <input type="number" min="1" id="idProduto" name="idProduto" required>
+        </div>
+
+        <div class="controle-form">
+            <label for="nomeProduto">Nome:</label>
+            <input type="text" id="nomeProduto" name="nomeProduto" required>
+        </div>
+
+        <div class="controle-form">
+            <label for="tipoProduto">Tipo:</label>
+            <select name="tipoProduto" id="tipoProduto">
+                <option value="Controle" selected>Controle</option>
+                <option value="Segurança">Segurança</option>
+                <option value="Suspensão">Suspensão</option>
+                <option value="Carroceria">Carroceria</option>
+                <option value="Acessório">Acessório</option>
+            </select>
+        </div>
+
+        <button type="button" id="atualizar">Atualizar</button>
+
+    </form>
+
+    <div id="produtos"></div>
+
+    <script>
+        buscaProdutos();
+
+        document.querySelector('#atualizar').addEventListener('click', () => {
+
+            const dadosProduto = {
+                "id": null,
+                "nome": document.querySelector('#nomeProduto').value,
+                "tipo": document.querySelector('#tipoProduto').value
+            }
+
+            const idProduto = document.querySelector('#idProduto').value;
+
+            fetch(`https://miniature-space-meme-gp6wjr447wg2wp9j-3000.app.github.dev/produtos/${idProduto}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(dadosProduto)
+            })
+            .then(resposta => {
+                if (resposta.ok) {
+                    window.alert('Produto atualizado!');
+                    buscaProdutos();
+                } else {
+                    window.alert('Erro');
+                }
+            })
+        });
+
+        function buscaProdutos() {
+            fetch('https://miniature-space-meme-gp6wjr447wg2wp9j-3000.app.github.dev/produtos', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            .then(resposta => resposta.json())
+            .then(resposta => {
+
+                const produtos = document.querySelector('#produtos');
+                const tituloProdutos = document.createElement('h2');
+
+                produtos.innerHTML = '';
+                tituloProdutos.innerHTML = 'Produtos';
+                produtos.append(tituloProdutos);
+
+                resposta.forEach(produto => {
+                    const ulProd = document.createElement('ul')
+                    ulProd.id = `produto-${produto.id}`
+                    ulProd.classList.add('produto') 
+
+                    const liIdProd = document.createElement('li')
+                    liIdProd.innerHTML = produto.id
+                    liIdProd.setAttribute('data-test', 'liIdProduto')
+                    liIdProd.setAttribute('data-prod', 'idProduto')
+                    
+                    const liNomeProd = document.createElement('li')
+                    liNomeProd.innerHTML = produto.nome ?? ""
+                    liNomeProd.setAttribute('data-prod', 'nomeProduto')
+                    
+                    const liTipoProd = document.createElement('li')
+                    liTipoProd.innerHTML = produto.tipo ?? ""
+                    liTipoProd.setAttribute('data-prod', 'tipoProduto')
+
+                    produtos.appendChild(ulProd).append(liIdProd, liNomeProd, liTipoProd)
+                });
+            })
+        }
+
+        document.querySelector('#produtos').addEventListener('click', e => {
+            if(e.target.closest('ul').classList.contains('produto')) {
+                document.querySelector('#idProduto').value = e.target.closest('ul').querySelector('[data-produto="idProduto"]').innerHTML
+            }
+        })
+
+    </script>
+</body>
+</html>
