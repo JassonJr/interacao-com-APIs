@@ -12,8 +12,8 @@
         <ul>
             <li><a href="./index.html">🏡 Home</a></li>
             <li><a href="./get.html">👨🏻‍🦯 Read com GET</a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
+            <li><a href="./update.html">🔄 Update com PUT</a></li>
+            <li><a href="./delete.html">❌ Delete com DELETE</a></li>
         </ul>
     </nav>
 
@@ -25,6 +25,16 @@
             <input type="text" id="nomeProduto" name="nomeProduto">
         </div>
 
+        <div class="controle-form">
+            <label for="tipoProduto">Tipo:</label>
+            <select name="tipoProduto" id="tipoProduto">
+                <option value="Controle" selected>Controle</option>
+                <option value="Suspensão">Suspensão</option>
+                <option value="Carroceria">Carroceria</option>
+                <option value="Acessório">Acessório</option>
+            </select>
+        </div>
+
         <button type="button" id="cadastrarProd">Cadastrar Produto</button>
     </form>
     <form action="" method="post"></form>
@@ -33,37 +43,55 @@
     <div id="produtos"></div>
 
     <script>
+        buscaProdutos();
+
         document.querySelector('#cadastrarProd').addEventListener('click', () => {
 
-            const dadosProd = {
+            const dadosProduto = {
                 "id": null,
-                "nome": document.querySelector('#nomeProduto').value
+                "nome": document.querySelector('#nomeProduto').value,
+                "tipo": document.querySelector('#tipoProduto').value
             }
 
-            fetch('https://miniature-space-meme-gp6wjr447wg2wp9j-3000.app.github.dev/produtos',{
+            fetch('https://miniature-space-meme-gp6wjr447wg2wp9j-3000.app.github.dev/produtos', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
                 },
-                body: JSON.stringify(dadosProd)
+                body: JSON.stringify(dadosProduto)
             })
-            .then(res => {
-                if(res.ok) window.alert('Produto Cadastrado com Sucesso.')
-                else window.alert('Houve algum erro ao cadastrar o produto.')
+            .then(resposta => {
+                if (resposta.ok) {
+                    window.alert('Produto cadastrado!');
+                    buscaProdutos();
+                } else {
+                    window.alert('Erro');
+                }
             })
-            // .then(res => res.json())
-            // .then(res => {
-            //     const produtos = document.querySelector('#produtos')
-            //     const tituloProd = document.createElement('h2')
+        });
 
-            //     produtos.innerHTML = ''
-            //     tituloProd.innerHTML = 'Produtos'
-            //     produtos.append(tituloProd)
-            //     res.forEach(produto => {
-            //         produtos.innerHTML += `<ul><li>ID:${produto.id}</li><li>Nome: ${produto.nome}</li></ul>`
-            //     })
-            // })
-        })
+        function buscaProdutos() {
+            fetch('https://miniature-space-meme-gp6wjr447wg2wp9j-3000.app.github.dev/produtos', {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json'
+                }
+            })
+            .then(resposta => resposta.json())
+            .then(resposta => {
+
+                const produtos = document.querySelector('#produtos');
+                const tituloProdutos = document.createElement('h2');
+
+                produtos.innerHTML = '';
+                tituloProdutos.innerHTML = 'Produtos';
+                produtos.append(tituloProdutos);
+
+                resposta.forEach(produto => {
+                    produtos.innerHTML += `<ul><li>ID: ${produto.id}</li><li>Nome: ${produto.nome}</li><li>Tipo: ${produto.tipo ? produto.tipo : ""}</li></ul>`;
+                });
+            })
+        }
     </script>
 </body>
 </html>

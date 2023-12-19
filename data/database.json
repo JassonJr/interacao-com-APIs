@@ -1,51 +1,46 @@
 {
   "produtos": [
     {
-      "id": 1,
-      "nome": "Retrovisor"
+      "id": 37,
+      "nome": "Banco",
+      "tipo": "Acessório"
     },
     {
-      "id": 2,
-      "nome": "Calota"
+      "id": 38,
+      "nome": "Alavanca do câmbio",
+      "tipo": "Controle"
     },
     {
-      "id": 34,
-      "nome": "Volante"
+      "id": 39,
+      "nome": "Buzina",
+      "tipo": "Controle"
     },
     {
-      "id": 35,
-      "nome": "Farol baixo"
-    },
-    {
-      "id": 36,
-      "nome": "Escapamento"
+      "id": 40,
+      "nome": "retrovisor",
+      "tipo": "Acessório"
     }
   ],
   "clientes": [
     {
       "id": 1,
       "username": "joaomarcos",
-      "senha": "123456"
+      "senha": "sa98g7s"
     },
     {
       "id": 2,
-      "username": "thiagoteixeira",
-      "senha": "7890"
+      "username": "thiagott",
+      "senha": "000"
     },
     {
-      "id": 3,
-      "nome": "miguelvs",
-      "senha": "40028922"
+      "username": "miguelvs",
+      "senha": "40028922",
+      "id": 3
     },
     {
       "id": 4,
-      "nome": "juliana",
+      "username": "juliana",
       "senha": "2244000"
-    },
-    {
-      "id": 5,
-      "username": "lucas",
-      "senha": "qualquercoisa"
     }
   ]
 }
