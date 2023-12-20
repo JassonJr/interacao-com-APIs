@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>CRUD</title>
+</head>
+<body>
+    <h2>CRUD</h2>
+    <nav>
+        <ul>
+            <li><a href="./index.html">🏡 Home</a></li>
+            <li><a href="./get.html">👨🏻‍🦯 Read com GET</a></li>
+            <li><a href="./update.html">🔄 Update com PUT</a></li>
+            <li><a href="./delete.html">❌ Delete com DELETE</a></li>
+        </ul>
+    </nav>
+
+    <button type="button" id="novoProduto">Novo Produto</button>
+
+    <div id="produtos"></div>
+
+    <div id="overlay" class="oculto"></div>
+
+    <div id="modalCreate" class="modal oculto">
+        <h2>Formulário Cadastro</h2>
+        <!-- Form CREATE -->
+        <form action="" method="post">
+            <div class="controle-form">
+                <label for="idProduto">ID:</label>
+                <input type="text" id="idProduto" name="idProduto">
+                <label for="nomeProduto">Nome</label>
+                <input type="text" id="nomeProduto" name="nomeProduto">
+            </div>
+            
+            <div class="controle-form">
+                <label for="tipoProduto">Tipo:</label>
+                <select name="tipoProduto" id="tipoProduto">
+                    <option value="Controle" selected>Controle</option>
+                    <option value="Suspensão">Suspensão</option>
+                    <option value="Carroceria">Carroceria</option>
+                    <option value="Acessório">Acessório</option>
+                </select>
+            </div>
+            
+            <button type="button" id="cadastrarProd">Cadastrar Produto</button>
+            <button type="reset" id="cancelarCreate">Cancelar</button>
+        </form>
+    </div>
+
+    <div id="modalUpdate" class="modal oculto">
+        <h2>Update com PUT 🛴</h2>
+        <!-- Form UPDATE -->
+        <form action="" method="post">
+
+            <div class="controle-form">
+                <label for="idProduto">ID:</label>
+                <input type="number" min="1" id="idProduto" name="idProduto" required>
+            </div>
+
+            <div class="controle-form">
+                <label for="nomeProduto">Nome:</label>
+                <input type="text" id="nomeProduto" name="nomeProduto" required>
+            </div>
+
+            <div class="controle-form">
+                <label for="tipoProduto">Tipo:</label>
+                <select name="tipoProduto" id="tipoProduto">
+                    <option value="Controle" selected>Controle</option>
+                    <option value="Segurança">Segurança</option>
+                    <option value="Suspensão">Suspensão</option>
+                    <option value="Carroceria">Carroceria</option>
+                    <option value="Acessório">Acessório</option>
+                </select>
+            </div>
+
+            <button type="button" id="atualizar">Atualizar</button>
+
+        </form>
+    </div>
+    <script>
+        const overlay = document.querySelector('#overlay')
+        const modalCreate = document.querySelector('#modalCreate')
+
+        document.querySelector('#cadastrarProd').addEventListener('click', () => {
+
+            const dadosProduto = {
+                "id": null,
+                "nome": document.querySelector('#nomeProduto').value,
+                "tipo": document.querySelector('#tipoProduto').value
+            }
+
+            fetch('https://miniature-space-meme-gp6wjr447wg2wp9j-3000.app.github.dev/produtos', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(dadosProduto)
+            })
+            .then(resposta => {
+                if (resposta.ok) {
+                    window.alert('Produto cadastrado!');
+                    buscaProdutos();
+                } else {
+                    window.alert('Erro');
+                }
+            })
+        });
+    
+        document.querySelector('#atualizar').addEventListener('click', () => {
+
+            const dadosProduto = {
+                "id": null,
+                "nome": document.querySelector('#nomeProduto').value,
+                "tipo": document.querySelector('#tipoProduto').value
+            }
+
+            const idProduto = document.querySelector('#idProduto').value;
+
+            fetch(`https://miniature-space-meme-gp6wjr447wg2wp9j-3000.app.github.dev/produtos/${idProduto}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(dadosProduto)
+            })
+            .then(resposta => {
+                if (resposta.ok) {
+                    window.alert('Produto atualizado!');
+                    buscaProdutos();
+                } else {
+                    window.alert('Erro');
+                }
+            })
+            });
+    
+        document.querySelector('#novoProduto').addEventListener('click', () => {
+            overlay.classList.toggle('oculto')
+            modalCreate.classList.toggle('oculto')
+        })
+
+        document.querySelector('#cancelarCreate').addEventListener('click', () => {
+            overlay.classList.add('oculto')
+            modalCreate.classList.add('oculto')
+        })
+    </script>
+</body>
+</html>
