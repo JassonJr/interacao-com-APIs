@@ -118,7 +118,7 @@
 
         document.querySelector('#produtos').addEventListener('click', e => {
             if(e.target.closest('ul').classList.contains('produto')) {
-                document.querySelector('#idProduto').value = e.target.closest('ul').querySelector('[data-produto="idProduto"]').innerHTML
+                document.querySelector('#idProduto').value = e.target.closest('ul').querySelector('[data-prod="idProduto"]').innerHTML
             }
         })
 
